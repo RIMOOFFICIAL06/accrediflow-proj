@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AccrediFlow – Professional Accreditation Platform</title>
+
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Professional font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-900 text-slate-200">
+
+  <!-- Top Nav -->
+  <header class="sticky top-0 z-40 bg-slate-900/80 backdrop-blur-lg border-b border-slate-300/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+        <svg viewBox="0 0 64 64" class="h-8 w-8 text-cyan-400" aria-hidden="true">
+          <path d="M32 4 L60 60 H48 L32 28 L16 60 H4 Z" fill="currentColor"/>
+        </svg>
+        <span class="text-xl font-bold tracking-tight text-slate-100">AccrediFlow</span>
+      </div>
+
+      <!-- Auth Buttons -->
+      <nav id="authNav" class="flex items-center gap-4 text-sm">
+         <!-- Buttons will be dynamically inserted here -->
+      </nav>
+    </div>
+  </header>
+
+  <!-- Landing Page -->
+  <section id="landing" class="relative hero-bg overflow-hidden page-section">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 text-center">
+      <h1 class="text-4xl md:text-6xl font-extrabold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-slate-100 to-slate-400">
+        Streamline Your Accreditation Workflow
+      </h1>
+      <p class="mt-6 text-lg md:text-xl text-slate-400 max-w-3xl mx-auto">
+        A secure, role-based platform for seamless document submission, verification, and reporting. Empower your institution's quality assurance process.
+      </p>
+      <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+        <button onclick="showLogin()" class="px-8 py-3 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold transition-all shadow-[0_0_20px_rgba(22,163,222,0.3)] hover:shadow-[0_0_30px_rgba(22,163,222,0.5)] text-base">
+          Get Started
+        </button>
+        <button onclick="showSuperadmin()" class="px-8 py-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold transition-colors border border-slate-700">
+          Superadmin Panel
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Login Section -->
+  <section id="login" class="hidden page-section min-h-[80vh] flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-md rounded-xl border border-slate-700 bg-slate-800/50 p-8 shadow-2xl shadow-slate-950/50">
+      <h2 class="text-2xl font-bold text-center text-slate-100">Welcome Back</h2>
+      <p class="text-center text-slate-400 text-sm mt-1">Login to access your dashboard.</p>
+      <form onsubmit="handleLogin(event)" class="mt-8 space-y-5">
+        <label class="block">
+          <span class="text-sm font-medium text-slate-400">Email</span>
+          <input id="email" type="email" required class="mt-1 w-full rounded-md bg-slate-900/50 border border-slate-700 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 px-3 py-2.5 outline-none transition" />
+        </label>
+        <label class="block">
+          <span class="text-sm font-medium text-slate-400">Password</span>
+          <input id="password" type="password" required class="mt-1 w-full rounded-md bg-slate-900/50 border border-slate-700 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 px-3 py-2.5 outline-none transition" />
+        </label>
+        <label class="block">
+          <span class="text-sm font-medium text-slate-400">Role</span>
+          <select id="role" required class="mt-1 w-full rounded-md bg-slate-900/50 text-slate-200 border border-slate-700 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 px-3 py-2.5 outline-none transition appearance-none">
+            <option value="">Select Role</option>
+            <option value="admin">Admin</option>
+            <option value="coordinator">Coordinator</option>
+            <option value="hod">HOD</option>
+            <option value="faculty">Faculty</option>
+          </select>
+        </label>
+        <button type="submit" class="w-full mt-2 px-4 py-3 rounded-md bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold transition">
+          Login
+        </button>
+        <p class="text-sm text-center text-slate-400 pt-2">
+          New institution?
+          <button type="button" onclick="showSignup()" class="font-semibold text-cyan-400 hover:underline">Register here</button>
+        </p>
+        <button type="button" onclick="backToLanding()" class="w-full mt-4 px-4 py-2.5 rounded-md border border-slate-700 hover:bg-slate-700 text-slate-300 font-medium transition">
+          Back to Home
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Signup Section -->
+  <section id="signup" class="hidden page-section min-h-[80vh] flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-lg rounded-xl border border-slate-700 bg-slate-800/50 p-8 shadow-2xl shadow-slate-950/50">
+      <h2 class="text-2xl font-bold text-center text-slate-100">Register Your Institute</h2>
+      <p class="text-center text-slate-400 text-sm mt-1">Submit your details for approval.</p>
+      <form onsubmit="handleSignup(event)" class="mt-8 space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label class="block"><span class="text-sm font-medium text-slate-400">Institute Name</span><input id="instituteName" type="text" required class="mt-1 w-full rounded-md bg-slate-900/50 border border-slate-700 px-3 py-2.5 outline-none"/></label>
+            <label class="block"><span class="text-sm font-medium text-slate-400">Institute Type</span><select id="instituteType" required class="mt-1 w-full rounded-md bg-slate-900/50 text-slate-200 border border-slate-700 px-3 py-2.5 outline-none appearance-none"><option value="">Select Type</option><option value="university">University</option><option value="college">College</option></select></label>
+            <label class="block"><span class="text-sm font-medium text-slate-400">Accreditation Body</span><select id="accreditationBody" required class="mt-1 w-full rounded-md bg-slate-900/50 text-slate-200 border border-slate-700 px-3 py-2.5 outline-none appearance-none"><option value="">Select Body</option><option value="naac">NAAC</option><option value="nba">NBA</option></select></label>
+            <label class="block"><span class="text-sm font-medium text-slate-400">Official Email Domain</span><input id="emailDomain" type="text" placeholder="@yourcollege.edu" required class="mt-1 w-full rounded-md bg-slate-900/50 border border-slate-700 px-3 py-2.5 outline-none"/></label>
+            <label class="block"><span class="text-sm font-medium text-slate-400">Admin Name</span><input id="adminName" type="text" required class="mt-1 w-full rounded-md bg-slate-900/50 border border-slate-700 px-3 py-2.5 outline-none"/></label>
+            <label class="block"><span class="text-sm font-medium text-slate-400">Admin Email</span><input id="adminEmail" type="email" required class="mt-1 w-full rounded-md bg-slate-900/50 border border-slate-700 px-3 py-2.5 outline-none"/></label>
+            <label class="block"><span class="text-sm font-medium text-slate-400">Admin Phone</span><input id="adminPhone" type="tel" required class="mt-1 w-full rounded-md bg-slate-900/50 border border-slate-700 px-3 py-2.5 outline-none"/></label>
+            <label class="block"><span class="text-sm font-medium text-slate-400">Create Password</span><input id="signupPassword" type="password" required class="mt-1 w-full rounded-md bg-slate-900/50 border border-slate-700 px-3 py-2.5 outline-none"/></label>
+        </div>
+        <button type="submit" class="w-full mt-4 px-4 py-3 rounded-md bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold transition">Submit for Approval</button>
+        <p class="text-sm text-center text-slate-400 pt-2">Already registered? <button type="button" onclick="showLogin()" class="font-semibold text-cyan-400 hover:underline">Login here</button></p>
+        <button type="button" onclick="backToLanding()" class="w-full mt-4 px-4 py-2.5 rounded-md border border-slate-700 hover:bg-slate-700 text-slate-300 font-medium transition">
+          Back to Home
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Dashboards -->
+  <section id="adminDashboard" class="hidden page-section"></section>
+  <section id="coordinatorDashboard" class="hidden page-section"></section>
+  <section id="hodDashboard" class="hidden page-section"></section>
+  <section id="facultyDashboard" class="hidden page-section"></section>
+  <section id="superadminDashboard" class="hidden page-section"></section>
+
+  <!-- Templates -->
+  <template id="dashboardLayoutTemplate">
+    <div class="flex min-h-screen">
+      <aside class="w-64 shrink-0 border-r border-slate-700 bg-slate-900 p-4 flex flex-col">
+        <div class="flex items-center gap-3 h-12 border-b border-slate-700 pb-4">
+            <svg viewBox="0 0 64 64" class="h-7 w-7 text-cyan-400"><path d="M32 4 L60 60 H48 L32 28 L16 60 H4 Z" fill="currentColor"/></svg>
+            <span class="font-bold text-lg">AccrediFlow</span>
+        </div>
+        <nav id="sidebarNav" class="space-y-2 flex-1 mt-6"></nav>
+        <button onclick="logout()" class="w-full text-left px-4 py-2.5 rounded-md text-slate-300 hover:bg-slate-700/50 font-medium transition-colors">Logout</button>
+      </aside>
+      <div class="flex-1 bg-slate-800/50">
+        <header class="h-16 flex items-center justify-between px-6 border-b border-slate-700">
+            <h1 id="dashboardTitle" class="text-xl font-semibold text-slate-100"></h1>
+            <div id="headerActions"></div>
+        </header>
+        <main id="dashboardContent" class="p-6"></main>
+      </div>
+    </div>
+  </template>
+
+  <template id="uploadModalTemplate">
+    <div class="modal-backdrop fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50" style="animation: fadeIn 0.2s ease">
+      <div class="w-full max-w-lg rounded-xl bg-slate-800 border border-slate-700 p-6 shadow-2xl">
+        <h3 class="text-lg font-semibold text-slate-100">Upload Document</h3>
+        <form id="uploadForm" class="mt-4 space-y-4">
+          <input id="docTitle" class="w-full rounded-md bg-slate-900/50 border border-slate-600 px-3 py-2" placeholder="Document Title" required>
+          <input id="docCategory" class="w-full rounded-md bg-slate-900/50 border border-slate-600 px-3 py-2" placeholder="Category (e.g., NAAC 3.1.2)" required>
+          <input id="docDept" class="w-full rounded-md bg-slate-900/50 border border-slate-600 px-3 py-2" placeholder="Department (optional)">
+          <textarea id="docRemarks" class="w-full rounded-md bg-slate-900/50 border border-slate-600 px-3 py-2" placeholder="Remarks (optional)"></textarea>
+          <input id="docFileName" class="w-full rounded-md bg-slate-900/50 border border-slate-600 px-3 py-2" placeholder="File name (simulated)" required>
+          <div class="flex justify-end gap-3 pt-3">
+            <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-md border border-slate-600 text-slate-300 hover:bg-slate-700 transition">Cancel</button>
+            <button type="submit" class="px-4 py-2 rounded-md bg-cyan-500 text-slate-900 font-semibold hover:bg-cyan-400 transition">Upload</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </template>
+
+  <!-- Custom Alert/Confirm Modal -->
+  <div id="customModal" class="hidden fixed inset-0 bg-black/70 z-50 items-center justify-center p-4">
+    <div class="w-full max-w-sm rounded-xl bg-slate-800 border border-slate-700 p-6 shadow-2xl text-center">
+        <h3 id="modalTitle" class="text-lg font-semibold text-slate-100"></h3>
+        <p id="modalMessage" class="mt-2 text-slate-400"></p>
+        <div id="modalActions" class="mt-6 flex gap-3 justify-center"></div>
+    </div>
+  </div>
+
+  <!-- Custom JavaScript -->
+  <script src="script.js" defer></script>
+</body>
+</html>
