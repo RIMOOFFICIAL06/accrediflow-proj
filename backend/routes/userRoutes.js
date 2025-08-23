@@ -1,9 +1,9 @@
 import express from 'express';
 const router = express.Router();
-import { 
-  registerUser, 
-  loginUser, 
-  getPendingAdmins, 
+import {
+  registerUser,
+  loginUser,
+  getPendingAdmins,
   approveAdmin,
   createInstituteUser,
   getInstituteUsers
@@ -19,7 +19,7 @@ router.get('/pending', getPendingAdmins);
 router.put('/:id/approve', approveAdmin);
 
 // --- Admin Routes (Protected) ---
-router.route('/')
+router.route('/') // Corrected from '/:id' to '/'
     .post(protect, isAdmin, createInstituteUser)
     .get(protect, isAdmin, getInstituteUsers);
 
