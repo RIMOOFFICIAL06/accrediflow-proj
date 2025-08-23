@@ -1,13 +1,14 @@
 import express from 'express';
 const router = express.Router();
-import {
-    createDocument,
+import { 
+    createDocument, 
     getDocuments,
     getFacultyDocumentsForHOD,
     getHodApprovedDocuments,
     getReportData,
-    generateMergedPdfReport,
-    updateDocumentStatus
+    generateHtmlReport,
+    generatePdfReport,
+    updateDocumentStatus // Make sure this is imported
 } from '../controllers/documentController.js';
 import { protect, isAdmin } from '../middleware/authMiddleware.js';
 
@@ -22,7 +23,8 @@ router.get('/hod-approved', protect, getHodApprovedDocuments);
 
 // Admin reporting routes
 router.get('/report', protect, isAdmin, getReportData);
-router.get('/report/pdf/:body', protect, isAdmin, generateMergedPdfReport);
+router.get('/report/html', protect, isAdmin, generateHtmlReport);
+router.get('/report/pdf', protect, isAdmin, generatePdfReport);
 
 // Route to update status
 router.put('/:id/status', protect, updateDocumentStatus);
