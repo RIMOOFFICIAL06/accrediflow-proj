@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 
-// Define the schema for the approval history sub-document
 const historySchema = new mongoose.Schema({
   action: {
     type: String,
@@ -21,7 +20,6 @@ const historySchema = new mongoose.Schema({
   }
 });
 
-// Define the main schema for the Document model
 const documentSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -35,8 +33,14 @@ const documentSchema = new mongoose.Schema({
   status: {
     type: String,
     required: true,
-    enum: ['Pending', 'Approved', 'Rejected'],
-    default: 'Pending'
+    // BUGFIX: Add all possible statuses to the allowed list
+    enum: [
+        'Pending HOD Approval', 
+        'Pending Coordinator Approval', 
+        'Approved', 
+        'Rejected'
+    ],
+    default: 'Pending HOD Approval'
   },
   filePath: {
     type: String,
@@ -56,8 +60,5 @@ const documentSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Create the Document model from the schema
 const Document = mongoose.model('Document', documentSchema);
-
-// Export the model using the new 'export default' syntax
 export default Document;

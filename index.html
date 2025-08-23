@@ -138,11 +138,16 @@
         <button onclick="logout()" class="w-full text-left px-4 py-2.5 rounded-md text-slate-300 hover:bg-slate-700/50 font-medium transition-colors">Logout</button>
       </aside>
       <div class="flex-1 bg-slate-800/50">
-        <header class="h-16 flex items-center justify-between px-6 border-b border-slate-700">
-            <h1 id="dashboardTitle" class="text-xl font-semibold text-slate-100"></h1>
-            <div id="headerActions"></div>
-        </header>
-        <main id="dashboardContent" class="p-6"></main>
+        <!-- Find this line inside the dashboardLayoutTemplate -->
+<header class="h-16 flex items-center justify-between px-6 border-b border-slate-700">
+    <h1 id="dashboardTitle" class="text-xl font-semibold text-slate-100"></h1>
+    
+    <!-- ADD THIS NEW DIV -->
+    <div id="progressTracker" class="flex items-center gap-3"></div>
+
+    <div id="headerActions"></div>
+</header>
+       <main id="dashboardContent" class="p-6"></main>
       </div>
     </div>
   </template>

@@ -5,25 +5,27 @@ import {
     getDocuments,
     getFacultyDocumentsForHOD,
     getHodApprovedDocuments,
+    getReportData,
+    generateMergedPdfReport, // Import the new merged PDF function
     updateDocumentStatus
 } from '../controllers/documentController.js';
-import { protect } from '../middleware/authMiddleware.js';
+import { protect, isAdmin } from '../middleware/authMiddleware.js';
 
-// General routes for creating and fetching personal documents
+// General routes
 router.route('/')
     .post(protect, createDocument)
     .get(protect, getDocuments);
 
-// Route for an HOD to get all documents from faculty
-router.route('/faculty')
-    .get(protect, getFacultyDocumentsForHOD);
+// Role-specific GET routes
+router.get('/faculty', protect, getFacultyDocumentsForHOD);
+router.get('/hod-approved', protect, getHodApprovedDocuments);
 
-// Route for a Coordinator to get documents approved by HODs
-router.route('/hod-approved')
-    .get(protect, getHodApprovedDocuments);
+// Admin reporting routes
+router.get('/report', protect, isAdmin, getReportData);
+// New route for merged PDF booklet. It accepts a parameter for the body (e.g., 'NAAC')
+router.get('/report/pdf/:body', protect, isAdmin, generateMergedPdfReport); 
 
-// Route to update the status of a specific document
-router.route('/:id/status')
-    .put(protect, updateDocumentStatus);
+// Route to update status
+router.put('/:id/status', protect, updateDocumentStatus);
 
 export default router;
