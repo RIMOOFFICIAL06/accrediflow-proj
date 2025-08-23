@@ -4,7 +4,7 @@
    =================================================== */
 
 // --- API Configuration ---
-const API_URL = 'http://localhost:5000/api'; // Base URL for your backend
+const API_URL = '/api'; // Use a relative path for production
 
 // --- App State (session-based) ---
 let currentUser = JSON.parse(sessionStorage.getItem("currentUser")) || null;

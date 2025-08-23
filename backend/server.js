@@ -1,43 +1,52 @@
-// Import necessary packages using the new 'import' syntax
 import express from 'express';
+import dotenv from 'dotenv';
 import cors from 'cors';
 import path from 'path';
-import dotenv from 'dotenv';
-import connectDB from './config/db.js'; // Note the '.js' extension is often needed with imports
+import { fileURLToPath } from 'url';
+
+// Import DB and routes
+import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
 import documentRoutes from './routes/documentRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 
-// Configure dotenv
+// Load environment variables
 dotenv.config();
 
-// Establish the database connection
+// Connect to database
 connectDB();
 
-// Initialize the Express application
 const app = express();
 
-// --- Middleware ---
-app.use(cors({ origin: '*' })); 
-app.use(express.json()); 
+// Middleware
+app.use(cors());
+app.use(express.json());
 
 // --- API Routes ---
+// All API calls will be prefixed with /api
 app.use('/api/users', userRoutes);
 app.use('/api/documents', documentRoutes);
 app.use('/api/upload', uploadRoutes);
 
-// --- Serve Static Files ---
-const __dirname = path.resolve();
+// --- Deployment Preparation ---
+
+// Get the directory name of the current module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve the 'uploads' folder statically
+// This makes uploaded files accessible via URL
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
+// Serve the frontend static files in production
+app.use(express.static(path.join(__dirname, '../'))); // Serve files from the root folder
 
-// --- Basic Route ---
-app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to the AccrediFlow API!' });
+// For any other route, serve the index.html
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../', 'index.html'));
 });
 
-// --- Start the Server ---
+
+// --- Server Initialization ---
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
